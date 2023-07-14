@@ -75,4 +75,7 @@ Pod::Spec.new do |s|
     ck.dependency 'RongCloudRTC/RongCallLib'
   end
 
+  s.dependency "Masonry"
+  s.dependency "YYKit"
+  
 end

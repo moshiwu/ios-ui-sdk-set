@@ -136,7 +136,7 @@
     if (!_messageReadStatusView) {
         _messageReadStatusView = [[RCBaseImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
         _messageReadStatusView.backgroundColor = [UIColor clearColor];
-        _messageReadStatusView.image = RCResourceImage(@"message_read_status");
+//        _messageReadStatusView.image = RCResourceImage(@"message_read_status");
         _messageReadStatusView.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return _messageReadStatusView;

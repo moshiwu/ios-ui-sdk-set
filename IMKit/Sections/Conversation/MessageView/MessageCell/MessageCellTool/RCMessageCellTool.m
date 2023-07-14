@@ -10,6 +10,8 @@
 #import "RCKitCommonDefine.h"
 #import "RCKitUtility.h"
 
+#import <YYKit/YYKit.h>
+
 @implementation RCMessageCellTool
 + (UIImage *)getDefaultMessageCellBackgroundImage:(RCMessageModel *)model{
     UIImage *bubbleImage;
@@ -19,7 +21,7 @@
         if ([self isWhiteBubbleImageWithSendMesageCell:model.objectName]) {
             bubbleImage = RCResourceImage(@"chat_to_bg_white");
         }else{
-            bubbleImage = RCResourceImage(@"chat_to_bg_normal");
+            bubbleImage = [RCResourceImage(@"chat_to_bg_normal") imageByTintColor:HEXCOLOR(0xF0DFFF)];
         }
     }
     if ([RCKitUtility isRTL]) {
@@ -153,6 +155,6 @@
 
 #pragma mark - Private Methods
 + (UIImage *)getResizableImage:(UIImage *)image{
-    return [image resizableImageWithCapInsets:UIEdgeInsetsMake(image.size.height * 0.5, image.size.width * 0.5, image.size.height * 0.5, image.size.width * 0.5)];
+    return [image resizableImageWithCapInsets:UIEdgeInsetsMake(image.size.height * 0.49, image.size.width * 0.49, image.size.height * 0.49, image.size.width * 0.49)];
 }
 @end

@@ -17,6 +17,8 @@
 #import "RCResendManager.h"
 #import <RCCoreClient+Destructing.h>
 #import <RongPublicService/RongPublicService.h>
+#import <YYKit/YYKit.h>
+
 // 头像
 #define PortraitImageViewTop 0
 // 气泡
@@ -268,7 +270,7 @@ NSString *const KNotificationMessageBaseCellUpdateCanReceiptStatus =
                     strongSelf.receiptStatusLabel.frame = CGRectMake(0 , statusFrame.size.height - 12,statusFrame.size.width, 12);
                     if (strongSelf.model.conversationType == ConversationType_PRIVATE || strongSelf.model.conversationType == ConversationType_Encrypted) {
                         strongSelf.receiptView.frame = CGRectMake(0, statusFrame.size.height - 16, 16, 16);
-                        [strongSelf.receiptView setImage:RCResourceImage(@"message_read_status") forState:UIControlStateNormal];
+//                        [strongSelf.receiptView setImage:RCResourceImage(@"message_read_status") forState:UIControlStateNormal];
                     } else {
                         strongSelf.receiptView.frame = CGRectMake(0, statusFrame.size.height - 16, 14, 14);
                         [strongSelf.receiptView setImage:RCResourceImage(@"receipt") forState:UIControlStateNormal];
@@ -287,7 +289,7 @@ NSString *const KNotificationMessageBaseCellUpdateCanReceiptStatus =
                     strongSelf.receiptStatusLabel.frame = CGRectMake(0 , statusFrame.size.height - 12,statusFrame.size.width, 12);
                     if (strongSelf.model.conversationType == ConversationType_PRIVATE || strongSelf.model.conversationType == ConversationType_Encrypted) {
                         strongSelf.receiptView.frame = CGRectMake(StatusContentViewWidth - 16, statusFrame.size.height - 16, 16, 16);
-                        [strongSelf.receiptView setImage:RCResourceImage(@"message_read_status") forState:UIControlStateNormal];
+//                        [strongSelf.receiptView setImage:RCResourceImage(@"message_read_status") forState:UIControlStateNormal];
                     } else {
                         strongSelf.receiptView.frame = CGRectMake(StatusContentViewWidth - 14, statusFrame.size.height - 16, 14, 14);
                         [strongSelf.receiptView setImage:RCResourceImage(@"receipt") forState:UIControlStateNormal];
@@ -717,7 +719,7 @@ NSString *const KNotificationMessageBaseCellUpdateCanReceiptStatus =
     } else {
         RCUserInfo *userInfo = [[RCUserInfoCacheManager sharedManager] getUserInfo:model.senderUserId];
         model.userInfo = userInfo;
-        [self.portraitImageView setPlaceholderImage:RCResourceImage(@"default_portrait_msg")];
+        [self.portraitImageView setPlaceholderImage:[UIImage imageWithColor:HEXCOLOR(0xF5F5F7)]];
         if (userInfo) {
             [self.portraitImageView setImageURL:[NSURL URLWithString:userInfo.portraitUri]];
             [self.nicknameLabel setText:[RCKitUtility getDisplayName:userInfo]];
@@ -907,7 +909,7 @@ NSString *const KNotificationMessageBaseCellUpdateCanReceiptStatus =
 - (RCBaseButton *)receiptView {
     if (!_receiptView) {
         _receiptView = [[RCBaseButton alloc] init];
-        [_receiptView setImage:RCResourceImage(@"message_read_status") forState:UIControlStateNormal];
+//        [_receiptView setImage:RCResourceImage(@"message_read_status") forState:UIControlStateNormal];
         [_receiptView addTarget:self
                          action:@selector(enableShowReceiptView:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -981,7 +983,7 @@ NSString *const KNotificationMessageBaseCellUpdateCanReceiptStatus =
 
 - (RCloudImageView *)portraitImageView{
     if (!_portraitImageView) {
-        _portraitImageView = [[RCloudImageView alloc] initWithPlaceholderImage:RCResourceImage(@"default_portrait_msg")];
+        _portraitImageView = [[RCloudImageView alloc] initWithPlaceholderImage:[UIImage imageWithColor:HEXCOLOR(0xF5F5F7)]];
         //点击头像
         UITapGestureRecognizer *portraitTap =
             [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserPortaitEvent:)];

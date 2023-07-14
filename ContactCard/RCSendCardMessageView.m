@@ -13,6 +13,9 @@
 #import "RCCCExtensionModule.h"
 #import "RCloudImageView.h"
 #import "RongContactCardAdaptiveHeader.h"
+
+#import <YYKit/YYKit.h>
+
 NSString *const RCCC_CardMessageSend = @"RCCC_CardMessageSend";
 
 @interface RCSendCardMessageView ()
@@ -98,7 +101,7 @@ NSString *const RCCC_CardMessageSend = @"RCCC_CardMessageSend";
     _portraitView.layer.masksToBounds = YES;
     _portraitView.translatesAutoresizingMaskIntoConstraints = NO;
     [_contentView addSubview:_portraitView];
-    [_portraitView setPlaceholderImage:[RCCCUtilities imageNamed:@"default_portrait_msg" ofBundle:@"RongCloud.bundle"]];
+    [_portraitView setPlaceholderImage:[UIImage imageWithColor:HEXCOLOR(0xF5F5F7)]];
 
     //昵称
     _nicknameLabel = [[RCBaseLabel alloc] initWithFrame:CGRectZero];

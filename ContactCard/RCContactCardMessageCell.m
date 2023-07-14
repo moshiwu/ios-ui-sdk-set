@@ -11,6 +11,9 @@
 #import "UIColor+RCCCColor.h"
 #import "RCCCUtilities.h"
 #import "RCloudImageView.h"
+
+#import <YYKit/YYKit.h>
+
 #define Cart_Message_Cell_Height 93
 #define Cart_Portrait_View_Width 40
 
@@ -68,7 +71,7 @@
         self.portraitView.layer.cornerRadius = 5.f;
     }
     [self.portraitView
-        setPlaceholderImage:[RCCCUtilities imageNamed:@"default_portrait_msg" ofBundle:@"RongCloud.bundle"]];
+        setPlaceholderImage:[UIImage imageWithColor:HEXCOLOR(0xF5F5F7)]];
 
     //昵称label
     self.nameLabel = [[RCBaseLabel alloc] initWithFrame:CGRectZero];

@@ -6,23 +6,26 @@
 //  Copyright (c) 2014 Heq.Shinoda. All rights reserved.
 //
 
-#import "RCKitUtility.h"
+#import "RCButton.h"
 #import "RCConversationModel.h"
+#import "RCExtensionService.h"
 #import "RCIM.h"
 #import "RCKitCommonDefine.h"
-#import "RCUserInfoCacheManager.h"
-#import <SafariServices/SafariServices.h>
-#import "RCloudImageLoader.h"
 #import "RCKitConfig.h"
-#import "UIImage+RCDynamicImage.h"
-#import "RCPinYin.h"
+#import "RCKitUtility.h"
 #import "RCMBProgressHUD.h"
-#import "RCButton.h"
-#import "RCExtensionService.h"
+#import "RCPinYin.h"
+#import "RCSemanticContext.h"
+#import "RCUserInfoCacheManager.h"
+#import "RCloudImageLoader.h"
+#import "UIImage+RCDynamicImage.h"
+
 #import <RongDiscussion/RongDiscussion.h>
 #import <RongPublicService/RongPublicService.h>
+#import <SafariServices/SafariServices.h>
 #import <UIKit/UIKit.h>
-#import "RCSemanticContext.h"
+#import <YYKit/YYKit.h>
+
 @interface RCKitWeakRefObject : NSObject
 @property (nonatomic, weak) id weakRefObj;
 + (instancetype)refWithObject:(id)obj;
@@ -427,7 +430,7 @@
     if (model.conversationModelType == RC_CONVERSATION_MODEL_TYPE_NORMAL) {
         if (model.conversationType == ConversationType_SYSTEM || model.conversationType == ConversationType_PRIVATE ||
             model.conversationType == ConversationType_CUSTOMERSERVICE) {
-            return RCResourceImage(@"default_portrait_msg");
+            return [UIImage imageWithColor:HEXCOLOR(0xF5F5F7)];
         } else if (model.conversationType == ConversationType_GROUP) {
             return RCResourceImage(@"default_group_portrait");
         } else if (model.conversationType == ConversationType_DISCUSSION) {
@@ -435,7 +438,7 @@
         }
     } else if (model.conversationModelType == RC_CONVERSATION_MODEL_TYPE_COLLECTION) {
         if (model.conversationType == ConversationType_PRIVATE || model.conversationType == ConversationType_SYSTEM) {
-            return RCResourceImage(@"default_portrait");
+            return [UIImage imageWithColor:HEXCOLOR(0xF5F5F7)];
         } else if (model.conversationType == ConversationType_CUSTOMERSERVICE) {
             return RCResourceImage(@"portrait_kefu");
         } else if (model.conversationType == ConversationType_DISCUSSION) {
@@ -444,9 +447,9 @@
             return RCResourceImage(@"default_collection_portrait");
         }
     } else if (model.conversationModelType == RC_CONVERSATION_MODEL_TYPE_PUBLIC_SERVICE) {
-        return RCResourceImage(@"default_portrait");
+        return [UIImage imageWithColor:HEXCOLOR(0xF5F5F7)];
     }
-    return RCResourceImage(@"default_portrait");
+    return [UIImage imageWithColor:HEXCOLOR(0xF5F5F7)];
 }
 
 + (NSString *)defaultTitleForCollectionConversation:(RCConversationType)conversationType {

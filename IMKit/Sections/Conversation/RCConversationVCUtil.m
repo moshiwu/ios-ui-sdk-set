@@ -229,27 +229,6 @@
     return NO;
 }
 
-//获取具体消息的阅后即焚倒计时时长
-- (NSUInteger)getMessageDestructDuration:(RCMessageContent *)content {
-    NSUInteger duration = content.destructDuration;
-    if (self.chatVC.chatSessionInputBarControl.destructMessageMode) {
-        if ([content isKindOfClass:[RCTextMessage class]]) {
-            RCTextMessage *msg = (RCTextMessage *)content;
-            if (msg.content.length <= 20) {
-                duration = 10;
-            } else {
-                duration = 10 + (int)(msg.content.length - 20) / 2;
-            }
-        } else if ([content isKindOfClass:[RCVoiceMessage class]] || [content isKindOfClass:[RCHQVoiceMessage class]] ||
-                   [content isKindOfClass:[RCSightMessage class]]) {
-            duration = 10;
-        } else if ([content isKindOfClass:[RCImageMessage class]] || [content isKindOfClass:[RCGIFMessage class]]) {
-            duration = 30;
-        }
-    }
-    return duration;
-}
-
 - (BOOL)canRecallMessageOfModel:(RCMessageModel *)model {
     long long cTime = [[NSDate date] timeIntervalSince1970] * 1000;
     long long ServerTime = cTime - [[RCCoreClient sharedCoreClient] getDeltaTime];
@@ -267,8 +246,7 @@
 
 
 - (BOOL)canReferenceMessage:(RCMessageModel *)message {
-    if (!RCKitConfigCenter.message.enableMessageReference || !self.chatVC.chatSessionInputBarControl || self.chatVC.chatSessionInputBarControl.hidden ||
-        self.chatVC.chatSessionInputBarControl.destructMessageMode) {
+    if (!RCKitConfigCenter.message.enableMessageReference || !self.chatVC.chatSessionInputBarControl || self.chatVC.chatSessionInputBarControl.hidden) {
         return NO;
     }
     
@@ -289,10 +267,6 @@
     return NO;
 }
 - (void)doSendMessage:(RCMessageContent *)messageContent pushContent:(NSString *)pushContent {
-    messageContent.destructDuration = [self getMessageDestructDuration:messageContent];
-    if (messageContent.destructDuration > 0) {
-        pushContent = RCLocalizedString(@"BurnAfterRead");
-    }
     if ([messageContent isKindOfClass:[RCMediaMessageContent class]]) {
         [[RCIM sharedRCIM] sendMediaMessage:self.chatVC.conversationType
                                    targetId:self.chatVC.targetId

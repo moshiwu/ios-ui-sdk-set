@@ -1553,15 +1553,6 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
     case PLUGIN_BOARD_ITEM_CAMERA_TAG: {
         [self openSystemCamera];
     } break;
-    case PLUGIN_BOARD_ITEM_LOCATION_TAG: {
-        [self openLocationPicker];
-    } break;
-    case PLUGIN_BOARD_ITEM_DESTRUCT_TAG: {
-        [self switchDestructMessageMode];
-    } break;
-    case PLUGIN_BOARD_ITEM_FILE_TAG: {
-        [self openFileSelector];
-    } break;
     case PLUGIN_BOARD_ITEM_EVA_TAG: {
         [self commentCustomerServiceWithStatus:self.csUtil.currentServiceStatus commentId:nil quitAfterComment:NO];
     } break;
@@ -1595,30 +1586,12 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
 - (void)openSystemAlbum {
     [self.chatSessionInputBarControl openSystemAlbum];
 }
+
 //打开相机
 - (void)openSystemCamera {
     [self.chatSessionInputBarControl openSystemCamera];
 }
 
-//开关阅后即焚功能
-- (void)switchDestructMessageMode {
-    if (self.chatSessionInputBarControl.destructMessageMode) {
-        [self.chatSessionInputBarControl resetToDefaultStatus];
-    } else {
-        [self.util alertDestructMessageRemind];
-        [self.chatSessionInputBarControl setDefaultInputType:RCChatSessionInputBarInputDestructMode];
-    }
-}
-
-//打开位置
-- (void)openLocationPicker {
-    [self.chatSessionInputBarControl openLocationPicker];
-}
-
-//打开文件选择
-- (void)openFileSelector {
-    [self.chatSessionInputBarControl openFileSelector];
-}
 //打开其他的 Extention 功能，如音视频功能
 - (void)openDynamicFunction:(NSInteger)functionTag {
     [self.chatSessionInputBarControl openDynamicFunction:functionTag];
@@ -3052,10 +3025,8 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
     if (self.referencingView) {
         UIButton *recordBtn = (UIButton *)self.chatSessionInputBarControl.recordButton;
         UIButton *emojiBtn = (UIButton *)self.chatSessionInputBarControl.emojiButton;
-        UIButton *additionalBtn = (UIButton *)self.chatSessionInputBarControl.additionalButton;
         //文本输入或者表情输入状态下，才可以发送引用消息
-        if ((recordBtn.hidden || emojiBtn.state == UIControlStateHighlighted) &&
-            additionalBtn.state == UIControlStateNormal) {
+        if ((recordBtn.hidden || emojiBtn.state == UIControlStateHighlighted)) {
             [self.referencingView setOffsetY:CGRectGetMinY(self.chatSessionInputBarControl.frame) -
                                              self.referencingView.frame.size.height];
 

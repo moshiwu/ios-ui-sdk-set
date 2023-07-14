@@ -100,7 +100,7 @@ NSString *const RCKitKeyboardWillShowNotification = @"RCKitKeyboardWillShowNotif
 }
 
 - (void)rcinit {
-    self.backgroundColor = RCDYCOLOR(0xF5F6F9, 0x1c1c1c);
+    self.backgroundColor = RCDYCOLOR(0xFFFFFF, 0x1c1c1c);
     self.keyboardFrame = CGRectZero;
     self.isNew = 0;
     [self addBottomAreaView];
@@ -399,10 +399,6 @@ NSString *const RCKitKeyboardWillShowNotification = @"RCKitKeyboardWillShowNotif
 }
 
 - (void)inputContainerViewEmojiButtonClicked:(RCInputContainerView *)inputContainerView {
-    if (self.destructMessageMode) {
-        [self openDestructAlbum];
-        return;
-    }
     if (self.currentBottomBarStatus == KBottomBarEmojiStatus) {
         [self animationLayoutBottomBarWithStatus:KBottomBarKeyboardStatus animated:YES];
     } else {
@@ -411,17 +407,34 @@ NSString *const RCKitKeyboardWillShowNotification = @"RCKitKeyboardWillShowNotif
     [self enableEmojiBoardViewSendButton];
 }
 
-- (void)inputContainerViewAdditionalButtonClicked:(RCInputContainerView *)inputContainerView {
-    if (self.destructMessageMode) {
-        [self animationLayoutBottomBarWithStatus:KBottomBarDefaultStatus animated:YES];
-        return;
-    }
-    if (self.currentBottomBarStatus == KBottomBarPluginStatus) {
-        [self animationLayoutBottomBarWithStatus:KBottomBarKeyboardStatus animated:YES];
-    } else {
-        [self animationLayoutBottomBarWithStatus:KBottomBarPluginStatus animated:YES];
+- (void)inputContainerViewPhotoButtonClicked:(RCInputContainerView *)inputContainerView
+{
+    if ([self.delegate respondsToSelector:@selector(pluginBoardView:clickedItemWithTag:)]) {
+        [self.delegate pluginBoardView:self.pluginBoardView clickedItemWithTag:PLUGIN_BOARD_ITEM_ALBUM_TAG];
     }
 }
+
+- (void)inputContainerViewGiftButtonClicked:(RCInputContainerView *)inputContainerView
+{
+    if ([self.delegate respondsToSelector:@selector(pluginBoardView:clickedItemWithTag:)]) {
+        [self.delegate pluginBoardView:self.pluginBoardView clickedItemWithTag:PLUGIN_BOARD_ITEM_GIFT_TAG];
+    }
+}
+
+- (void)inputContainerViewVoiceButtonClicked:(RCInputContainerView *)inputContainerView
+{
+    if ([self.delegate respondsToSelector:@selector(pluginBoardView:clickedItemWithTag:)]) {
+        [self.delegate pluginBoardView:self.pluginBoardView clickedItemWithTag:PLUGIN_BOARD_ITEM_VOIP_TAG];
+    }
+}
+
+- (void)inputContainerViewVideoButtonClicked:(RCInputContainerView *)inputContainerView
+{
+    if ([self.delegate respondsToSelector:@selector(pluginBoardView:clickedItemWithTag:)]) {
+        [self.delegate pluginBoardView:self.pluginBoardView clickedItemWithTag:PLUGIN_BOARD_ITEM_VIDEO_VOIP_TAG];
+    }
+}
+
 
 - (void)inputContainerView:(RCInputContainerView *)inputContainerView forControlEvents:(UIControlEvents)controlEvents {
     [self didTouchRecordButtonEvent:controlEvents];
@@ -1315,10 +1328,6 @@ NSString *const RCKitKeyboardWillShowNotification = @"RCKitKeyboardWillShowNotif
     return self.inputContainerView.emojiButton;
 }
 
-- (RCButton *)additionalButton {
-    return self.inputContainerView.additionalButton;
-}
-
 - (UIView *)newLine {
     UIView *line = [UIView new];
     line.backgroundColor = [RCKitUtility generateDynamicColor:HEXCOLOR(0xe3e5e6) darkColor:HEXCOLOR(0x2f2f2f)];
@@ -1545,7 +1554,7 @@ NSString *const RCKitKeyboardWillShowNotification = @"RCKitKeyboardWillShowNotif
     if (bottom > 0) {
         UIView * bottomAreaView= [[UIView alloc] initWithFrame:CGRectMake(0, self.containerView.bounds.size.height - bottom,
                                                                           self.containerView.bounds.size.width, bottom)];
-        bottomAreaView.backgroundColor = RCDYCOLOR(0xF8F8F8, 0x0b0b0c);
+        bottomAreaView.backgroundColor = RCDYCOLOR(0xFFFFFF, 0x0b0b0c);
         self.safeAreaView = bottomAreaView;
         [self.containerView addSubview:bottomAreaView];
     }
@@ -1553,10 +1562,6 @@ NSString *const RCKitKeyboardWillShowNotification = @"RCKitKeyboardWillShowNotif
 
 - (RCPublicServiceMenu *)publicServiceMenu {
     return self.menuContainerView.publicServiceMenu;
-}
-
-- (BOOL)destructMessageMode {
-    return self.inputContainerView.destructMessageMode;
 }
 
 - (void)setCurrentBottomBarStatus:(KBottomBarStatus)currentBottomBarStatus {

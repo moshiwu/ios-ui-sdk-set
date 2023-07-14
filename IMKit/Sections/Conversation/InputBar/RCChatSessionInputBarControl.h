@@ -15,7 +15,7 @@
 #import "RCInputContainerView.h"
 #import "RCMenuContainerView.h"
 #import "RCBaseNavigationController.h"
-#define RC_ChatSessionInputBar_Height 49.5f
+#define RC_ChatSessionInputBar_Height 102.f
 ///输入栏扩展输入的唯一标示
 #define INPUT_MENTIONED_SELECT_TAG 1000
 #define PLUGIN_BOARD_ITEM_ALBUM_TAG 1001
@@ -32,6 +32,7 @@
 #define PLUGIN_BOARD_ITEM_CARD_TAG 1107
 #define PLUGIN_BOARD_ITEM_REMOTE_CONTROL_TAG 1108
 #define PLUGIN_BOARD_ITEM_TRANSFER_TAG 1109
+#define PLUGIN_BOARD_ITEM_GIFT_TAG 1009527
 
 /*!
  输入工具栏的点击监听器
@@ -126,11 +127,6 @@
  表情的按钮
  */
 @property (strong, nonatomic) RCButton *emojiButton;
-
-/*!
- 扩展输入的按钮
- */
-@property (strong, nonatomic) RCButton *additionalButton;
 
 /*!
  公众服务账号菜单
@@ -337,11 +333,6 @@
  @param functionTag 某个 pluginItem 的 tag
 */
 - (void)openDynamicFunction:(NSInteger)functionTag;
-
-/*!
- 是否处于阅后即焚模式
-*/
-@property (nonatomic, assign) BOOL destructMessageMode;
 
 @end
 

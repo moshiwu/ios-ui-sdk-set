@@ -10,6 +10,9 @@
 #import "UIColor+RCCCColor.h"
 #import "RCCCUtilities.h"
 #import "RongContactCardAdaptiveHeader.h"
+
+#import <YYKit/YYKit.h>
+
 @interface RCCCContactTableViewCell ()
 
 @end
@@ -54,7 +57,7 @@
     _portraitView.layer.masksToBounds = YES;
 
     _portraitView.translatesAutoresizingMaskIntoConstraints = NO;
-    [_portraitView setPlaceholderImage:[RCCCUtilities imageNamed:@"default_portrait_msg" ofBundle:@"RongCloud.bundle"]];
+    [_portraitView setPlaceholderImage:[UIImage imageWithColor:HEXCOLOR(0xF5F5F7)]];
     [self.contentView addSubview:_portraitView];
 
     _nicknameLabel = [[RCBaseLabel alloc] init];

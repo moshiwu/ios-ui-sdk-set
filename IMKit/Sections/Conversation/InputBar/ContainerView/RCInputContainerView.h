@@ -34,10 +34,11 @@
  */
 @property (nonatomic, strong) RCButton *emojiButton;
 
-/*!
- 扩展输入的按钮
- */
-@property (nonatomic, strong) RCButton *additionalButton;
+
+@property (nonatomic, strong) RCButton *photoButton;
+@property (nonatomic, strong) RCButton *giftButton;
+@property (nonatomic, strong) RCButton *voiceButton;
+@property (nonatomic, strong) RCButton *videoButton;
 
 @property (nonatomic, assign) KBottomBarStatus currentBottomBarStatus;
 
@@ -47,9 +48,6 @@
  @discussion 该变量设置范围为: 1~6, 超过该范围会自动调整为边界值
  */
 @property (nonatomic, assign) NSInteger maxInputLines;
-
-//是否处于阅后即焚模式
-@property (nonatomic, assign) BOOL destructMessageMode;
 
 // 隐藏表情按钮
 @property(nonatomic, assign) BOOL hideEmojiButton;
@@ -68,7 +66,10 @@
 
 - (void)inputContainerViewEmojiButtonClicked:(RCInputContainerView *)inputContainerView;
 
-- (void)inputContainerViewAdditionalButtonClicked:(RCInputContainerView *)inputContainerView;
+- (void)inputContainerViewPhotoButtonClicked:(RCInputContainerView *)inputContainerView;
+- (void)inputContainerViewGiftButtonClicked:(RCInputContainerView *)inputContainerView;
+- (void)inputContainerViewVoiceButtonClicked:(RCInputContainerView *)inputContainerView;
+- (void)inputContainerViewVideoButtonClicked:(RCInputContainerView *)inputContainerView;
 
 - (void)inputContainerView:(RCInputContainerView *)inputContainerView forControlEvents:(UIControlEvents)controlEvents;
 
