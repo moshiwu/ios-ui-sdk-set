@@ -2245,9 +2245,9 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
     UIMenuItem *recallItem =
         [[UIMenuItem alloc] initWithTitle:RCLocalizedString(@"Recall")
                                    action:@selector(onRecallMessage:)];
-    UIMenuItem *multiSelectItem =
-        [[UIMenuItem alloc] initWithTitle:RCLocalizedString(@"MessageTapMore")
-                                   action:@selector(onMultiSelectMessageCell:)];
+//    UIMenuItem *multiSelectItem =
+//        [[UIMenuItem alloc] initWithTitle:RCLocalizedString(@"MessageTapMore")
+//                                   action:@selector(onMultiSelectMessageCell:)];
 
     UIMenuItem *referItem =
         [[UIMenuItem alloc] initWithTitle:RCLocalizedString(@"Reference")
@@ -2279,9 +2279,9 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
                                    action:@selector(onTranslateMessageCell:)];
         [items addObject:transItem];
     }
-    if (self.conversationType != ConversationType_SYSTEM) {
-        [items addObject:multiSelectItem];
-    }
+//    if (self.conversationType != ConversationType_SYSTEM) {
+//        [items addObject:multiSelectItem];
+//    }
     
     return items.copy;
 }

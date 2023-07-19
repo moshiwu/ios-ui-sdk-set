@@ -123,7 +123,7 @@
                                                options:0
                                                metrics:nil
                                                  views:cellSubViews]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_messageCreatedTimeLabel]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-21-[_messageCreatedTimeLabel]"
                                                                              options:0
                                                                              metrics:nil
                                                                                views:cellSubViews]];
@@ -154,7 +154,7 @@
                                                                     toItem:self.detailContentView
                                                                  attribute:NSLayoutAttributeBottom
                                                                 multiplier:1
-                                                                  constant:0]];
+                                                                  constant:4]];
 
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.conversationTitle
                                                                  attribute:NSLayoutAttributeTop
