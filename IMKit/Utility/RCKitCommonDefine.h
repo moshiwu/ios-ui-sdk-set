@@ -15,8 +15,8 @@
 #define RCResourceColor(key, colorStr) [RCKitUtility color:(key) originalColor:(colorStr)]
 
 #pragma mark - Screen Size
-#define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
-#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define SCREEN_SCALE ([UIScreen mainScreen].scale)
 
 #pragma mark - Dispatch Main Async

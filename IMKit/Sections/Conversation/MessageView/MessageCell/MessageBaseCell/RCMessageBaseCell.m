@@ -103,7 +103,7 @@ NSString *const KNotificationMessageBaseCellUpdateSendingStatus = @"KNotificatio
 }
 
 - (void)messageCellUpdateSendingStatusEvent:(NSNotification *)notification {
-    DebugLog(@"%s", __FUNCTION__);
+//    DebugLog(@"%s", __FUNCTION__);
 }
 
 #pragma mark - Multi select

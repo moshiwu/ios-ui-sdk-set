@@ -529,6 +529,9 @@
         [_photoButton setImage:[UIImage imageNamed:@"icon_message_photo"] forState:UIControlStateNormal];
         [_photoButton setExclusiveTouch:YES];
         [_photoButton addTarget:self action:@selector(didTouchPhotoDown:) forControlEvents:UIControlEventTouchUpInside];
+        if ([_photoButton respondsToSelector:@selector(setEnlargeEdge:)]) {
+            [_photoButton performSelector:@selector(setEnlargeEdge:) withObject:[NSNumber numberWithDouble:5.0]];
+        }
     }
     return _photoButton;
 }
@@ -540,6 +543,9 @@
         [_giftButton setImage:[UIImage imageNamed:@"icon_message_gift"] forState:UIControlStateNormal];
         [_giftButton setExclusiveTouch:YES];
         [_giftButton addTarget:self action:@selector(didTouchGiftDown:) forControlEvents:UIControlEventTouchUpInside];
+        if ([_giftButton respondsToSelector:@selector(setEnlargeEdge:)]) {
+            [_giftButton performSelector:@selector(setEnlargeEdge:) withObject:[NSNumber numberWithDouble:5.0]];
+        }
     }
     return _giftButton;
 }
@@ -551,6 +557,9 @@
         [_voiceButton setImage:[UIImage imageNamed:@"icon_message_voice"] forState:UIControlStateNormal];
         [_voiceButton setExclusiveTouch:YES];
         [_voiceButton addTarget:self action:@selector(didTouchVoiceDown:) forControlEvents:UIControlEventTouchUpInside];
+        if ([_voiceButton respondsToSelector:@selector(setEnlargeEdge:)]) {
+            [_voiceButton performSelector:@selector(setEnlargeEdge:) withObject:[NSNumber numberWithDouble:5.0]];
+        }
     }
     return _voiceButton;
 }
@@ -562,6 +571,10 @@
         [_videoButton setImage:[UIImage imageNamed:@"icon_message_video"] forState:UIControlStateNormal];
         [_videoButton setExclusiveTouch:YES];
         [_videoButton addTarget:self action:@selector(didTouchVideoDown:) forControlEvents:UIControlEventTouchUpInside];
+        if ([_videoButton respondsToSelector:@selector(setEnlargeEdge:)]) {
+            [_videoButton performSelector:@selector(setEnlargeEdge:) withObject:[NSNumber numberWithDouble:5.0]];
+        }
+
     }
     return _videoButton;
 }
