@@ -54,7 +54,7 @@
     self.image = placeholderImage;
 }
 - (void)setImageURL:(NSURL *)aURL {
-    //    self.contentMode = UIViewContentModeScaleAspectFill;
+    self.contentMode = UIViewContentModeScaleAspectFill;
     if (imageURL) {
         [[RCloudImageLoader sharedImageLoader] removeObserver:self forURL:imageURL];
         imageURL = nil;

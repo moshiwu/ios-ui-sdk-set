@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  获取相册权限
  */
 - (BOOL)hasAuthorizationStatusAuthorized;
+- (void)requestAuthorization:(void(^)(PHAuthorizationStatus status))handler;
 
 /**
  *  获取分组的所有图片

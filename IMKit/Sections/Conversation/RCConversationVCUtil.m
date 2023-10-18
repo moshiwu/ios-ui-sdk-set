@@ -6,22 +6,24 @@
 //  Copyright © 2020 RongCloud. All rights reserved.
 //
 
-#import "RCConversationVCUtil.h"
-#import "RCKitCommonDefine.h"
-#import "RCMessageBaseCell.h"
-#import "RCConversationViewController.h"
-#import "RCOldMessageNotificationMessage.h"
-#import "RCMessageCell.h"
-#import "RCIM.h"
-#import "RCloudMediaManager.h"
-#import "RCKitUtility.h"
-#import "RCGIFImage.h"
-#import <AVFoundation/AVFoundation.h>
-#import "RCVoiceMessageCell.h"
-#import "RCHQVoiceMessageCell.h"
-#import "RCKitConfig.h"
-#import "RCSightMessage+imkit.h"
 #import "RCConversationDataSource.h"
+#import "RCConversationVCUtil.h"
+#import "RCConversationViewController.h"
+#import "RCGIFImage.h"
+#import "RCHQVoiceMessageCell.h"
+#import "RCIM.h"
+#import "RCKitCommonDefine.h"
+#import "RCKitConfig.h"
+#import "RCKitUtility.h"
+#import "RCMessageBaseCell.h"
+#import "RCMessageCell.h"
+#import "RCOldMessageNotificationMessage.h"
+#import "RCSightMessage+imkit.h"
+#import "RCVoiceMessageCell.h"
+#import "RCloudMediaManager.h"
+//#import "VLEAssistantMsg.h"
+
+#import <AVFoundation/AVFoundation.h>
 
 @interface RCConversationViewController ()
 @property (nonatomic, strong, readonly) RCConversationDataSource *dataSource;
@@ -105,9 +107,16 @@
 
             long long current_time = model.sentTime;
 
-            long long interval =
-                current_time - previous_time > 0 ? current_time - previous_time : previous_time - current_time;
-            if (interval / 1000 <= 3 * 60) {
+            long long interval = current_time - previous_time > 0 ? current_time - previous_time : previous_time - current_time;
+            
+            if ([model.content isKindOfClass:NSClassFromString(@"VLEAssistantMsg")]) {
+                if (!model.isDisplayMessageTime && model.cellSize.height > 0) {
+                    CGSize size = model.cellSize;
+                    size.height = model.cellSize.height + 45;
+                    model.cellSize = size;
+                }
+                model.isDisplayMessageTime = YES;
+            } else if (interval / 1000 <= 3 * 60) {
                 if (model.isDisplayMessageTime && model.cellSize.height > 0) {
                     CGSize size = model.cellSize;
                     size.height = model.cellSize.height - 45;

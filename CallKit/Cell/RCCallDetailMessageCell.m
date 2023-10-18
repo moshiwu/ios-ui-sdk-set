@@ -22,8 +22,10 @@
 
     return CGSizeMake(collectionViewWidth, height);
 }
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
+
     if (self) {
         [self initialize];
     }
@@ -32,6 +34,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
+
     if (self) {
         [self initialize];
     }
@@ -45,6 +48,7 @@
     self.textLabel.numberOfLines = 0;
     [self.textLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.textLabel setTextAlignment:NSTextAlignmentLeft];
+
     if (RC_IOS_SYSTEM_VERSION_LESS_THAN(@"7.0")) {
         [self.textLabel setBackgroundColor:[UIColor clearColor]];
     }
@@ -61,10 +65,11 @@
 
 - (void)setAutoLayout {
     RCCallSummaryMessage *callMessage = (RCCallSummaryMessage *)self.model.content;
+
     if (callMessage.duration > 1000) {
         self.textLabel.text =
             [NSString stringWithFormat:@"%@ %@", RCCallKitLocalizedString(@"VoIPCallTotalTime"),
-                                       [RCCallKitUtility getReadableStringForTime:(long)(callMessage.duration / 1000)]];
+             [RCCallKitUtility getReadableStringForTime:(long)(callMessage.duration / 1000)]];
     } else {
         self.textLabel.text = [RCCallKitUtility getReadableStringForMessageCell:callMessage.hangupReason];
     }
@@ -88,39 +93,39 @@
     }
 
     CGSize __textSize = [RCKitUtility
-        getTextDrawingSize:self.textLabel.text
-                      font:self.textLabel.font
-           constrainedSize:CGSizeMake(self.baseContentView.bounds.size.width -
-                                          (10 + RCKitConfigCenter.ui.globalMessagePortraitSize.width + 10) * 2 -
-                                          (14 + 20 + 7 + 10),
-                                      8000)];
+                         getTextDrawingSize:self.textLabel.text
+                                       font:self.textLabel.font
+                            constrainedSize:CGSizeMake(self.baseContentView.bounds.size.width -
+                                                       (10 + RCKitConfigCenter.ui.globalMessagePortraitSize.width + 10) * 2 -
+                                                       (14 + 20 + 7 + 10),
+                                                       8000)];
     __textSize = CGSizeMake(ceilf(__textSize.width), ceilf(__textSize.height));
     float maxWidth = self.baseContentView.bounds.size.width -
         (10 + RCKitConfigCenter.ui.globalMessagePortraitSize.width + 10) * 2 - 5 - (14 + 20 + 7 + 10);
+
     if (__textSize.width > maxWidth) {
         __textSize.width = maxWidth;
     }
     CGSize __labelSize = CGSizeMake(__textSize.width, __textSize.height + 5);
 
     CGFloat __bubbleWidth = __labelSize.width + (14 + 20 + 7 + 10) < 50 ? 50 : (__labelSize.width + (14 + 20 + 7 + 10));
-    
+
     CGFloat __bubbleHeight = __labelSize.height + 5 + 5 < RCKitConfigCenter.ui.globalMessagePortraitSize.height ? RCKitConfigCenter.ui.globalMessagePortraitSize.height : (__labelSize.height + 5 + 5);
 
     CGSize __bubbleSize = CGSizeMake(__bubbleWidth, __bubbleHeight);
 
     self.messageContentView.contentSize = __bubbleSize;
+
     if (self.model.messageDirection == MessageDirection_SEND) {
-        self.textLabel.frame =
-            CGRectMake(10, (__bubbleHeight - __labelSize.height) / 2, __labelSize.width, __labelSize.height);
+        self.textLabel.frame = CGRectMake(10, (__bubbleHeight - __labelSize.height) / 2, __labelSize.width, __labelSize.height);
         self.mediaTypeIcon.frame = CGRectMake(CGRectGetMaxX(self.textLabel.frame) + 7, (__bubbleHeight - 20) / 2, 20, 20);
         [self.textLabel setTextColor:RCDYCOLOR(0x262626, 0x040A0F)];
     } else {
         self.mediaTypeIcon.frame = CGRectMake(10, (__bubbleHeight - 20) / 2, 20, 20);
-        self.textLabel.frame =
-            CGRectMake(CGRectGetMaxX(self.mediaTypeIcon.frame) + 7, (__bubbleHeight - __labelSize.height) / 2,
-                       __labelSize.width, __labelSize.height);
+        self.textLabel.frame = CGRectMake(CGRectGetMaxX(self.mediaTypeIcon.frame) + 7, (__bubbleHeight - __labelSize.height) / 2,  __labelSize.width, __labelSize.height);
         [self.textLabel setTextColor:[RCKitUtility generateDynamicColor:HEXCOLOR(0x262626)
                                                               darkColor:RCMASKCOLOR(0xffffff, 0.8)]];
     }
 }
+
 @end

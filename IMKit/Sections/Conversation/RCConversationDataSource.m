@@ -465,7 +465,7 @@ static BOOL msgRoamingServiceAvailable = YES;
                                             layout:self.customFlowLayout
                             sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
             increasedHeight += itemSize.height;
-            if ([self p_showTime:__messageArray index:i]) {
+            if ([self p_showTime:__messageArray index:i] || [model.content isKindOfClass:NSClassFromString(@"VLEAssistantMsg")]) {
                 CGSize size = model.cellSize;
                 size.height = model.cellSize.height + 45;
                 model.cellSize = size;

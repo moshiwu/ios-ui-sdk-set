@@ -25,6 +25,8 @@
 #import "RCLocationPickerViewController+imkit.h"
 #import "RCSemanticContext.h"
 #import "RCBaseButton.h"
+#import <YYKit/YYKit.h>
+
 //单个cell的高度是70（RCPlaginBoardCellSize）*2 + 上下padding的高度14*2 ＋
 //上下两个图标之间的padding
 #define Height_EmojBoardView 223.5f
@@ -171,10 +173,29 @@ NSString *const RCKitKeyboardWillShowNotification = @"RCKitKeyboardWillShowNotif
 
 // 打开相册
 - (void)openSystemAlbum {
-    RCAlumListTableViewController *albumListVC = [[RCAlumListTableViewController alloc] init];
-    albumListVC.delegate = self;
-    RCBaseNavigationController *rootVC = [[RCBaseNavigationController alloc] initWithRootViewController:albumListVC];
-    [self.delegate presentViewController:rootVC functionTag:PLUGIN_BOARD_ITEM_ALBUM_TAG];
+    
+    __weak __typeof(self)weakSelf = self;
+    
+    [[RCAssetHelper shareAssetHelper] requestAuthorization:^(PHAuthorizationStatus status) {
+        dispatch_async_on_main_queue(^{
+            if (status == PHAuthorizationStatusAuthorized) {
+                RCAlumListTableViewController *albumListVC = [[RCAlumListTableViewController alloc] init];
+                albumListVC.delegate = weakSelf;
+                RCBaseNavigationController *rootVC = [[RCBaseNavigationController alloc] initWithRootViewController:albumListVC];
+                [weakSelf.delegate presentViewController:rootVC functionTag:PLUGIN_BOARD_ITEM_ALBUM_TAG];
+            } else {
+                [RCAlertView showAlertController:@"权限不足" message:@"没有相册权限" actionTitles:nil cancelTitle:@"取消" confirmTitle:@"去设置"  preferredStyle:UIAlertControllerStyleAlert actionsBlock:nil cancelBlock:^{
+                } confirmBlock:^{
+                    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                    if (@available(iOS 10.0, *)) {
+                        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) { }];
+                    } else {
+                        [[UIApplication sharedApplication] openURL:url];
+                    }
+                } inViewController:nil];
+            }
+        });
+    }];
 }
 
 // 打开相机

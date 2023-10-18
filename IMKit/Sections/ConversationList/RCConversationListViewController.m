@@ -18,6 +18,7 @@
 #import "RCConversationListDataSource.h"
 #import "RCKitConfig.h"
 #import "RCConversationViewController.h"
+#import <Masonry/Masonry.h>
 
 @interface RCConversationListViewController () <UITableViewDataSource, UITableViewDelegate, RCConversationCellDelegate,RCConversationListDataSourceDelegate>
 
@@ -74,7 +75,10 @@
     }
     
     self.conversationListTableView = [[RCBaseTableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    self.conversationListTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+//    self.conversationListTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    
+
+    
     self.conversationListTableView.backgroundColor = RCDYCOLOR(0xffffff, 0x000000);
     self.conversationListTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(1, 1, 0, CGFLOAT_MIN)];
     CGFloat leftOffset = 12 + [RCKitConfig defaultConfig].ui.globalConversationPortraitSize.width + 12;
@@ -89,6 +93,12 @@
     self.conversationListTableView.rcmj_footer = self.footer;
     [self.view addSubview:self.conversationListTableView];
     [self registerObserver];
+    
+    [self.conversationListTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_topLayoutGuideBottom);
+        make.left.right.equalTo(self.view);
+        make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
