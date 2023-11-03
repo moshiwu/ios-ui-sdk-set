@@ -6,15 +6,15 @@
 //  Copyright © 2020 RongCloud. All rights reserved.
 //
 
+#import "RCConversationCellUpdateInfo.h"
 #import "RCConversationListDataSource.h"
 #import "RCIM.h"
-#import "RCKitUtility.h"
-#import "RCKitCommonDefine.h"
-#import "RCConversationCellUpdateInfo.h"
-#import "RCKitConfig.h"
 #import "RCIMNotificationDataContext.h"
+#import "RCKitCommonDefine.h"
+#import "RCKitConfig.h"
+#import "RCKitUtility.h"
+#import "RCUserInfoCacheManager.h"
 #define PagingCount 100
-
 @interface RCConversationListDataSource ()
 @property (nonatomic, strong) dispatch_queue_t updateEventQueue;
 @property (nonatomic, assign) NSInteger currentCount;
@@ -96,6 +96,11 @@
     dispatch_async(self.updateEventQueue, ^{
         NSMutableArray<RCConversationModel *> *modelList = [[NSMutableArray alloc] init];
 
+        NSMutableArray *blockList = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"VLEFindBlockUid"] mutableCopy];
+        if (!blockList) {
+            blockList = @[].mutableCopy;
+        }
+        
         if ([[RCIM sharedRCIM] getConnectionStatus] != ConnectionStatus_SignOut) {
             int count = (int)MAX(self.currentCount, PagingCount);
             dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -106,7 +111,16 @@
                     model.topCellBackgroundColor = self.topCellBackgroundColor;
                     model.cellBackgroundColor = self.cellBackgroundColor;
                     RCLogI(@"conversation targetid:%@,type:%@,unreadMessageCount:%@", conversation.targetId, @(conversation.conversationType), @(model.unreadMessageCount));
-                    [modelList addObject:model];
+                    NSString *lastestText = [RCKitUtility formatMessage:model.lastestMessage];
+
+                    if ([lastestText containsString:@"您有一个新的访客"]) { // 骚操作
+                        if (model.targetId && ![blockList containsObject:model.targetId]) {
+                            [blockList addObject:model.targetId];
+                            [[NSUserDefaults standardUserDefaults] setObject:blockList forKey:@"VLEFindBlockUid"];
+                        }
+                    } else {
+                        [modelList addObject:model];
+                    }
                 }
                 dispatch_semaphore_signal(semaphore);
             }];
